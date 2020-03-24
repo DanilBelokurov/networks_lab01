@@ -1,6 +1,6 @@
 clear all, close;
 
-%Исходные данные
+%РСЃС…РѕРґРЅС‹Рµ РґР°РЅРЅС‹Рµ
 k = 4;
 m = [1 0 1 1];
 l = -2: 1: 7;
@@ -14,20 +14,20 @@ e = [1 1 1 1 1 1 1];
 
 %e = randi([0 1], 1, k + length(g) - 1);
 
-%Сообщение поступает на вход кодера
+%РЎРѕРѕР±С‰РµРЅРёРµ РїРѕСЃС‚СѓРїР°РµС‚ РЅР° РІС…РѕРґ РєРѕРґРµСЂР°
 [a,c] = code(g, m);
 print("c(x)", c);
 print("a(x)", a);
 
-%Кодовое слово поступает в канал channel
+%РљРѕРґРѕРІРѕРµ СЃР»РѕРІРѕ РїРѕСЃС‚СѓРїР°РµС‚ РІ РєР°РЅР°Р» channel
 print("e(x)",e);
 b = channel(a, e);
 
-%Кодовое слово поступает на вход декодера
+%РљРѕРґРѕРІРѕРµ СЃР»РѕРІРѕ РїРѕСЃС‚СѓРїР°РµС‚ РЅР° РІС…РѕРґ РґРµРєРѕРґРµСЂР°
 E = decode(g, b);
 disp(E);
 
-%Дополнительное задание
+%Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕРµ Р·Р°РґР°РЅРёРµ
 disp("for x^3+x+1 and k = " + k + " l = 3");
 disp(dop(g, k, 3, d));
 
@@ -38,13 +38,13 @@ end
 
 figure();
 plot(l + k, dmins_array);
-xlabel("Длины информационной части");
-ylabel("Минимальное расстояние кода");
+xlabel("Р”Р»РёРЅС‹ РёРЅС„РѕСЂРјР°С†РёРѕРЅРЅРѕР№ С‡Р°СЃС‚Рё");
+ylabel("РњРёРЅРёРјР°Р»СЊРЅРѕРµ СЂР°СЃСЃС‚РѕСЏРЅРёРµ РєРѕРґР°");
 grid on;
 
-%---------------Функции, моделирующие работу элементов системы-------------
+%---------------Р¤СѓРЅРєС†РёРё, РјРѕРґРµР»РёСЂСѓСЋС‰РёРµ СЂР°Р±РѕС‚Сѓ СЌР»РµРјРµРЅС‚РѕРІ СЃРёСЃС‚РµРјС‹-------------
 
-%Моделирование работы кодера
+%РњРѕРґРµР»РёСЂРѕРІР°РЅРёРµ СЂР°Р±РѕС‚С‹ РєРѕРґРµСЂР°
 function [a,c] = code(g, m)
     r = length(g);
     factor = zeros(1, r);
@@ -59,7 +59,7 @@ function [a,c] = code(g, m)
     a = sum_(multi, c);
 end
 
-%Моделирование работы канала
+%РњРѕРґРµР»РёСЂРѕРІР°РЅРёРµ СЂР°Р±РѕС‚С‹ РєР°РЅР°Р»Р°
 function b = channel(a, e)
 
     b = xor_(a, e);
@@ -68,7 +68,7 @@ function b = channel(a, e)
     print("b(x)", b);
 end
 
-%Моделирование работы декодера
+%РњРѕРґРµР»РёСЂРѕРІР°РЅРёРµ СЂР°Р±РѕС‚С‹ РґРµРєРѕРґРµСЂР°
 function E = decode(g, b)
 
     [~, s] = devide(b, g);
@@ -79,17 +79,17 @@ function E = decode(g, b)
     E = comparison(s);
 end
 
-%Поиск всех кодовых слов с весом меньше (d-1)
+%РџРѕРёСЃРє РІСЃРµС… РєРѕРґРѕРІС‹С… СЃР»РѕРІ СЃ РІРµСЃРѕРј РјРµРЅСЊС€Рµ (d-1)
 function [result] = dop(g, k, l, d)
 
-    %Формирование списка сообщений
+    %Р¤РѕСЂРјРёСЂРѕРІР°РЅРёРµ СЃРїРёСЃРєР° СЃРѕРѕР±С‰РµРЅРёР№
     message_length = k + l;
     [message_list,num]   = permitations(2, message_length);
     for i = 1: num
         message_list(i,:) = modul2(message_list(i,:));
     end
         
-    %Формирование списка кодовых слов
+    %Р¤РѕСЂРјРёСЂРѕРІР°РЅРёРµ СЃРїРёСЃРєР° РєРѕРґРѕРІС‹С… СЃР»РѕРІ
     codeword_list = zeros(num, message_len + degree(g));
     result = zeros(l + 1, degree(g) + message_length); 
     
@@ -98,7 +98,7 @@ function [result] = dop(g, k, l, d)
         word = code(g, message_list(i,:));
         codeword_list(i,:) = word;
         
-        %Поиск необходимых кодовых слов
+        %РџРѕРёСЃРє РЅРµРѕР±С…РѕРґРёРјС‹С… РєРѕРґРѕРІС‹С… СЃР»РѕРІ
         if (weigth(word) <= (d-1))
             result(counter,:) = word;
             counter = counter + 1;
@@ -106,22 +106,22 @@ function [result] = dop(g, k, l, d)
     end
 end
 
-%Функция нахождения d_min для заданной длины сообщения
+%Р¤СѓРЅРєС†РёСЏ РЅР°С…РѕР¶РґРµРЅРёСЏ d_min РґР»СЏ Р·Р°РґР°РЅРЅРѕР№ РґР»РёРЅС‹ СЃРѕРѕР±С‰РµРЅРёСЏ
 function result = dmins(poly, message_len)
 
-    %Формирование множества сообщений
+    %Р¤РѕСЂРјРёСЂРѕРІР°РЅРёРµ РјРЅРѕР¶РµСЃС‚РІР° СЃРѕРѕР±С‰РµРЅРёР№
     [message_list,num]   = permitations(2, message_len);
     for i = 1: num
         message_list(i,:) = modul2(message_list(i,:));
     end
 
-    %Формирование кодовой книги
+    %Р¤РѕСЂРјРёСЂРѕРІР°РЅРёРµ РєРѕРґРѕРІРѕР№ РєРЅРёРіРё
     code_words = zeros(num, message_len + degree(poly));
     for i = 1: num
        [code_words(i,:), ~] = code(poly, message_list(i,:)); 
     end
     
-    %Подсчет минимального веса кодового слова (!=0)
+    %РџРѕРґСЃС‡РµС‚ РјРёРЅРёРјР°Р»СЊРЅРѕРіРѕ РІРµСЃР° РєРѕРґРѕРІРѕРіРѕ СЃР»РѕРІР° (!=0)
     code_word_weigth = zeros(1, num - 1);
     for i = 1: num - 1
         code_word_weigth(i) = weigth(code_words(i, :));
@@ -130,9 +130,9 @@ function result = dmins(poly, message_len)
     result = min(code_word_weigth);
 end
 
-%---------------------==Функции арифметики с полиномами==------------------
+%---------------------==Р¤СѓРЅРєС†РёРё Р°СЂРёС„РјРµС‚РёРєРё СЃ РїРѕР»РёРЅРѕРјР°РјРё==------------------
 
-%Функция умножения двух полиномов
+%Р¤СѓРЅРєС†РёСЏ СѓРјРЅРѕР¶РµРЅРёСЏ РґРІСѓС… РїРѕР»РёРЅРѕРјРѕРІ
 function result = produce(factor1, factor2)
     
     deg1 = length(factor1) - 1;
@@ -152,7 +152,7 @@ function result = produce(factor1, factor2)
     end
 end
 
-%Функция деления двух полиномов с остатком
+%Р¤СѓРЅРєС†РёСЏ РґРµР»РµРЅРёСЏ РґРІСѓС… РїРѕР»РёРЅРѕРјРѕРІ СЃ РѕСЃС‚Р°С‚РєРѕРј
 function [result, remainder] = devide(first, second)
 
     first  = polyCut(first);
@@ -165,7 +165,7 @@ function [result, remainder] = devide(first, second)
     remainder = zeros(1, deg1 + 1);
     
     if (deg1 < deg2)
-        %Делимое меньше делителя
+        %Р”РµР»РёРјРѕРµ РјРµРЅСЊС€Рµ РґРµР»РёС‚РµР»СЏ
         result    = zeros(1, deg  + 1);
         remainder = first;
     else
@@ -187,7 +187,7 @@ function [result, remainder] = devide(first, second)
     end
 end
 
-%Функция поэлементного xor-a двух полиномов
+%Р¤СѓРЅРєС†РёСЏ РїРѕСЌР»РµРјРµРЅС‚РЅРѕРіРѕ xor-a РґРІСѓС… РїРѕР»РёРЅРѕРјРѕРІ
 function result = xor_(poly1, poly2)
     result = zeros(1, length(poly1));
     
@@ -200,7 +200,7 @@ function result = xor_(poly1, poly2)
     end
 end
 
-%Функция нахождения степени полинома
+%Р¤СѓРЅРєС†РёСЏ РЅР°С…РѕР¶РґРµРЅРёСЏ СЃС‚РµРїРµРЅРё РїРѕР»РёРЅРѕРјР°
 function result = degree(poly)
     i = 1;
     while ((poly(i) ~= 1) && ( i < length(poly)))
@@ -209,7 +209,7 @@ function result = degree(poly)
     result = length(poly) - i;
 end
 
-%Функция приведения полинома к нормальному виду
+%Р¤СѓРЅРєС†РёСЏ РїСЂРёРІРµРґРµРЅРёСЏ РїРѕР»РёРЅРѕРјР° Рє РЅРѕСЂРјР°Р»СЊРЅРѕРјСѓ РІРёРґСѓ
 function result = polyCut(poly)
     deg = degree(poly);
     result = zeros(1, deg + 1);
@@ -221,7 +221,7 @@ function result = polyCut(poly)
     end
 end
 
-%Функция сложения двух полиномов (возможен разный размер)
+%Р¤СѓРЅРєС†РёСЏ СЃР»РѕР¶РµРЅРёСЏ РґРІСѓС… РїРѕР»РёРЅРѕРјРѕРІ (РІРѕР·РјРѕР¶РµРЅ СЂР°Р·РЅС‹Р№ СЂР°Р·РјРµСЂ)
 function result = sum_(poly1, poly2)
 
     len1 = length(poly1);
@@ -251,15 +251,15 @@ function result = sum_(poly1, poly2)
     end
 end
 
-%--------------------------Вспомогательные функции-------------------------
+%--------------------------Р’СЃРїРѕРјРѕРіР°С‚РµР»СЊРЅС‹Рµ С„СѓРЅРєС†РёРё-------------------------
 
-%Функция печати полинома
+%Р¤СѓРЅРєС†РёСЏ РїРµС‡Р°С‚Рё РїРѕР»РёРЅРѕРјР°
 function print(string, array)
     disp(string + " = ");
     disp(array);
 end
 
-%Функция приведения коэффициентов полинома по модулю
+%Р¤СѓРЅРєС†РёСЏ РїСЂРёРІРµРґРµРЅРёСЏ РєРѕСЌС„С„РёС†РёРµРЅС‚РѕРІ РїРѕР»РёРЅРѕРјР° РїРѕ РјРѕРґСѓР»СЋ
 function array = modul2(vector)
     array = zeros(1, length(vector));
     for i = 1: length(vector)
@@ -267,7 +267,7 @@ function array = modul2(vector)
     end
 end
 
-%Функция сравнения вектора с 0
+%Р¤СѓРЅРєС†РёСЏ СЃСЂР°РІРЅРµРЅРёСЏ РІРµРєС‚РѕСЂР° СЃ 0
 function comp = comparison(array)
     comp = 0;
     for i = 1: length(array)
@@ -281,7 +281,7 @@ function comp = comparison(array)
     end  
 end
 
-%Функция нахождения веса вектора
+%Р¤СѓРЅРєС†РёСЏ РЅР°С…РѕР¶РґРµРЅРёСЏ РІРµСЃР° РІРµРєС‚РѕСЂР°
 function w = weigth(vector)
     w = 0;
     for i = 1: length(vector)
@@ -289,7 +289,7 @@ function w = weigth(vector)
     end
 end
 
-%Функция приведения числа по модулю
+%Р¤СѓРЅРєС†РёСЏ РїСЂРёРІРµРґРµРЅРёСЏ С‡РёСЃР»Р° РїРѕ РјРѕРґСѓР»СЋ
 function r = mod2(num)
     t = int8(num / 2);
     r = num - (2 * t);
@@ -298,7 +298,7 @@ function r = mod2(num)
     end
 end
 
-%Функции нахождения размещений из n по k
+%Р¤СѓРЅРєС†РёРё РЅР°С…РѕР¶РґРµРЅРёСЏ СЂР°Р·РјРµС‰РµРЅРёР№ РёР· n РїРѕ k
 function [result, num] = permitations(n, k)
 
     num = n^k;

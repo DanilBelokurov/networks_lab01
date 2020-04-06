@@ -84,7 +84,7 @@ function [result] = dop(g, k, l, d)
 
     %Формирование списка сообщений
     message_length = k + l;
-    [message_list,num]   = permitations(2, message_length);
+    [message_list,num]   = permitations(message_length);
     for i = 1: num
         message_list(i,:) = modul2(message_list(i,:));
     end
@@ -110,7 +110,7 @@ end
 function result = dmins(poly, message_len)
 
     %Формирование множества сообщений
-    [message_list,num]   = permitations(2, message_len);
+    [message_list,num]   = permitations(message_len);
     for i = 1: num
         message_list(i,:) = modul2(message_list(i,:));
     end
@@ -298,22 +298,17 @@ function r = mod2(num)
     end
 end
 
-%Функции нахождения размещений из n по k
-function [result, num] = permitations(n, k)
+%Функции нахождения размещений из n по k при n=const=2
+function [result, num] = permitations(k)
 
-    num = n^k;
-    result = zeros(num, k);
+    result = zeros(2^k, k);
+    num    = 2^k;
     
-    for i = 1:  num
-        result(i,:) = getSequence(i, n, k);
-    end
-end
-
-function result = getSequence(sequence, n, k)
-    result = zeros(1, k);
-    while (k > 0)
-        result(k) = rem(sequence,n);
-        sequence = int8(sequence / n);
-        k = k - 1;
+    for i = 1: num
+        number = i - 1;
+        for j = 1: k
+            result(i, k - j + 1) = rem(number, 2);
+            number = fix(number/2);
+        end
     end
 end
